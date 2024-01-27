@@ -11,6 +11,21 @@ export async function getSongs(request, reply) {
   }
 }
 
+export async function getSong(request, reply) {
+  try {
+    const { data, error } = await supabase
+      .from("songs")
+      .select()
+      .eq("id", request.params.params);
+    if (error) {
+      throw error;
+    }
+    return reply.code(200).send(JSON.stringify(data));
+  } catch (err) {
+    return reply.code(500).send(err);
+  }
+}
+
 export async function postSong(request, reply) {
   var response;
   try {
